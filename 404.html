@@ -9,6 +9,26 @@
     <script>
       (function () {
         try {
+          if (
+            typeof globalThis.isSecureContext === "boolean" &&
+            !globalThis.isSecureContext &&
+            globalThis.crypto &&
+            typeof globalThis.crypto.randomUUID !== "function"
+          ) {
+            globalThis.crypto.randomUUID = function () {
+              return (
+                Date.now().toString(36) +
+                "-" +
+                Math.random().toString(36).slice(2, 11)
+              );
+            };
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
           var p = location.pathname;
           var i = p.indexOf("/admin/");
           var base;
@@ -34,8 +54,8 @@
     />
     <meta name="theme-color" content="#3d8b8b" />
     <title>竹本求真</title>
-    <script type="module" crossorigin src="/culspace-web/assets/index-D_zboeLx.js"></script>
-    <link rel="stylesheet" crossorigin href="/culspace-web/assets/index-BBBbErcY.css">
+    <script type="module" crossorigin src="/culspace-web/assets/index-DBOmnKqp.js"></script>
+    <link rel="stylesheet" crossorigin href="/culspace-web/assets/index-Bi6vBzzd.css">
   </head>
   <body>
     <div id="root"></div>
