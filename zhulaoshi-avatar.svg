@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="zhu-av-base" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f1f5f9"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="24" cy="24" r="24" fill="url(#zhu-av-base)"/>
+  <ellipse cx="24" cy="28" rx="11" ry="12" fill="#fde68a" opacity="0.35"/>
+  <ellipse cx="24" cy="27.5" rx="11" ry="11.5" fill="#ffedd5"/>
+  <path d="M12.5 21.5C14 12 20.5 8 28 9c5 .8 9.5 4 10.5 10v3h-4.5c-1-6-7.5-9.5-15-5.5-4 2-6.5 7.5-6 8z" fill="#475569"/>
+  <g fill="none" stroke="#0f172a" stroke-width="1.25" stroke-linecap="round" opacity="0.85">
+    <circle cx="19" cy="26.5" r="3"/>
+    <circle cx="29" cy="26.5" r="3"/>
+    <path d="M22 26.5h4"/>
+  </g>
+  <circle cx="19" cy="26.5" r="0.9" fill="#0f172a"/>
+  <circle cx="29" cy="26.5" r="0.9" fill="#0f172a"/>
+  <path d="M19.5 32q4.5 3 9 0" fill="none" stroke="#c2410c" stroke-width="1.35" stroke-linecap="round"/>
+</svg>
