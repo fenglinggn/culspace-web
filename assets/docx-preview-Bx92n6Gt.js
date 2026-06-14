@@ -1,4 +1,4 @@
-import{g as fe}from"./index-C6ejyZJw.js";import{r as ge}from"./jszip.min-BmrWuWjg.js";var be=ge();const ke=fe(be);/*
+import{g as fe}from"./index-C1Xt7bc9.js";import{r as ge}from"./jszip.min-Cv6pRawG.js";var be=ge();const ke=fe(be);/*
  * @license
  * docx-preview <https://github.com/VolodymyrBaydalka/docxjs>
  * Released under Apache License 2.0  <https://github.com/VolodymyrBaydalka/docxjs/blob/master/LICENSE>
