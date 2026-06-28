@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KG test harness</title>
+  <style>
+    html, body, #root { margin: 0; height: 100%; }
+    #root { display: flex; flex-direction: column; }
+  </style>
+  <script type="module">
+    import { injectIntoGlobalHook } from "/@react-refresh";
+    injectIntoGlobalHook(window);
+    window.$RefreshReg$ = () => {};
+    window.$RefreshSig$ = () => (type) => type;
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/dev/kgTestHarnessMain.tsx"></script>
+</body>
+</html>
