@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>caret keyboard fixture</title>
+<style>
+:root {
+  --tab-h: 56px;
+  --safe-bottom: 0px;
+  --visual-viewport-offset-bottom: 0px;
+  --chat-input-dock-h: 120px;
+  --card: #fff;
+  --line: #e5e7eb;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui; background: #f5f6f8; }
+.page {
+  display: flex; flex-direction: column; min-height: 100dvh;
+  padding-bottom: calc(var(--tab-h) + var(--safe-bottom));
+}
+html.h5-keyboard-open .page { padding-bottom: 0; }
+@media (pointer: fine) and (hover: hover) {
+  html.h5-keyboard-open .page {
+    padding-bottom: calc(var(--tab-h) + var(--safe-bottom));
+  }
+}
+.scroll { flex: 1; overflow: auto; padding: 12px; }
+html.h5-keyboard-open .scroll {
+  padding-bottom: calc(var(--chat-input-dock-h, 136px) + var(--safe-bottom));
+}
+@media (pointer: fine) and (hover: hover) {
+  html.h5-keyboard-open .scroll { padding-bottom: 12px; }
+}
+.inputDock {
+  flex-shrink: 0; width: 100%; background: var(--card);
+  border-top: 1px solid var(--line); z-index: 19;
+}
+@media (pointer: coarse), (hover: none) {
+  html.h5-keyboard-open .inputDock {
+    position: fixed; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 480px;
+    bottom: var(--visual-viewport-offset-bottom, 0px);
+    box-shadow: 0 -4px 16px rgba(15,23,42,.06);
+  }
+}
+.inputBar { padding: 10px 12px; }
+.textarea {
+  width: 100%; min-height: 40px; max-height: 120px;
+  border: 1px solid #ccc; border-radius: 8px; padding: 8px 12px;
+  font-size: 17px; resize: none;
+}
+.attachPanel { display: flex; gap: 16px; padding: 4px 20px 14px; }
+@media (pointer: coarse), (hover: none) {
+  html.h5-keyboard-open .attachPanel { display: none; }
+}
+.attachPanelItem {
+  width: 64px; height: 64px; border-radius: 12px; background: #eef6f6;
+  display:flex; align-items:center; justify-content:center; font-size:12px;
+}
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; height: var(--tab-h);
+  background: #fff; border-top: 1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+}
+html.h5-keyboard-open .tabbar { display: none; }
+#fakeKeyboard {
+  display: none; position: fixed; left: 0; right: 0; bottom: 0;
+  height: 0; background: rgba(0,0,0,.35); z-index: 5;
+  color: #fff; align-items: center; justify-content: center;
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="scroll">对话内容…</div>
+  <div class="inputDock" id="dock">
+    <div class="inputBar">
+      <textarea class="textarea" id="ta" placeholder="想问什么…"></textarea>
+    </div>
+    <div class="attachPanel" id="attach">
+      <div class="attachPanelItem">拍照</div>
+      <div class="attachPanelItem">上传图片</div>
+      <div class="attachPanelItem">上传文件</div>
+      <div class="attachPanelItem">新建对话</div>
+    </div>
+  </div>
+</div>
+<div class="tabbar">Tab</div>
+<div id="fakeKeyboard">KEYBOARD</div>
+<script>
+window.__measure = function() {
+  const ta = document.getElementById('ta');
+  const dock = document.getElementById('dock');
+  const attach = document.getElementById('attach');
+  const kb = document.getElementById('fakeKeyboard');
+  const taRect = ta.getBoundingClientRect();
+  const dockRect = dock.getBoundingClientRect();
+  const attachStyle = getComputedStyle(attach);
+  const dockStyle = getComputedStyle(dock);
+  const kbH = kb.offsetHeight;
+  const visualBottom = window.innerHeight - kbH;
+  const caretY = taRect.bottom - 8; // approx caret near bottom of textarea
+  return {
+    keyboardOpen: document.documentElement.classList.contains('h5-keyboard-open'),
+    bottomCss: getComputedStyle(document.documentElement).getPropertyValue('--visual-viewport-offset-bottom').trim(),
+    dockPosition: dockStyle.position,
+    attachDisplay: attachStyle.display,
+    taBottom: Math.round(taRect.bottom),
+    dockBottom: Math.round(dockRect.bottom),
+    visualBottom: Math.round(visualBottom),
+    caretAboveKeyboard: caretY <= visualBottom + 0.5,
+    innerHeight: window.innerHeight,
+  };
+};
+window.__openMobileKeyboard = function(kbH = 360) {
+  document.documentElement.classList.add('h5-keyboard-open');
+  document.documentElement.style.setProperty('--visual-viewport-offset-bottom', kbH + 'px');
+  const kb = document.getElementById('fakeKeyboard');
+  kb.style.display = 'flex';
+  kb.style.height = kbH + 'px';
+  // sync dock height var
+  const dock = document.getElementById('dock');
+  document.documentElement.style.setProperty('--chat-input-dock-h', Math.ceil(dock.getBoundingClientRect().height) + 'px');
+};
+window.__closeKeyboard = function() {
+  document.documentElement.classList.remove('h5-keyboard-open');
+  document.documentElement.style.setProperty('--visual-viewport-offset-bottom', '0px');
+  const kb = document.getElementById('fakeKeyboard');
+  kb.style.display = 'none';
+  kb.style.height = '0';
+};
+</script>
+</body>
+</html>
